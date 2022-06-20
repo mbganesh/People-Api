@@ -25,18 +25,15 @@ app.get('/api' , (req ,res ) => {
 
 app.get('/api/isActive/:isAcitve' , async (req ,res ) => {
     
-
     try {
         let reqData = req.params.isAcitve
-
 
         await axios.get('https://mb-people-api.herokuapp.com/api/').then(result => {
             let allData = result.data
 
-
-        let foundData = allData.filter(el => el.isAcitve === Boolean(reqData))
+        let foundData = allData.filter(el => el.isAcitve )
      
-            res.json(foundData)
+            res.json(allData)
         })
 
     } catch (error) {
