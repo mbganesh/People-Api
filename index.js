@@ -45,13 +45,12 @@ app.get('/api/isActive/:isAcitve' , async (req ,res ) => {
 
 app.get('/api/length/:length' , async (req ,res ) => {
     
-
     try {
         let reqData = parseInt(req.params.length)
 
-        console.log(reqData);
-
-
+        if(reqData <= 0){
+           return res.json([])
+        }
         let allData = await axios.get('https://mb-people-api.herokuapp.com/api/')
         let com = allData.data.slice(0,reqData)
         res.json(com)
@@ -62,8 +61,6 @@ app.get('/api/length/:length' , async (req ,res ) => {
 })
 
 app.get('/api/random/' , async (req ,res ) => {
-    
-
     try {
         let allData = await axios.get('https://mb-people-api.herokuapp.com/api/')
         let com = allData.data
