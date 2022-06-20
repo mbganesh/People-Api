@@ -29,25 +29,52 @@ app.get('/api/isActive/:isAcitve' , async (req ,res ) => {
     try {
         let reqData = req.params.isAcitve
 
-        console.log(Boolean(reqData));
 
-        axios.get('http://localhost:3030/api/').then(result => {
+        await axios.get('https://mb-people-api.herokuapp.com/api/').then(result => {
             let allData = result.data
 
 
-        console.log(allData);
-
         let foundData = allData.filter(el => el.isAcitve === Boolean(reqData))
-
+     
             res.json(foundData)
         })
 
-
-
-        
     } catch (error) {
         res.json({success:false , message:'Unable to retrieve data,Please try again'})
     }
 })
+
+
+
+app.get('/api/length/:length' , async (req ,res ) => {
+    
+
+    try {
+        let reqData = parseInt(req.params.length)
+
+        console.log(reqData);
+
+
+        let allData = await axios.get('https://mb-people-api.herokuapp.com/api/')
+        let com = allData.data.slice(0,reqData)
+        res.json(com)
+
+    } catch (error) {
+        res.json({success:false , message:'Unable to retrieve data,Please try again'})
+    }
+})
+
+app.get('/api/random/' , async (req ,res ) => {
+    
+
+    try {
+        let allData = await axios.get('https://mb-people-api.herokuapp.com/api/')
+        let com = allData.data
+        res.json(com[Math.floor(Math.random() * com.length)])
+    } catch (error) {
+        res.json({success:false , message:'Unable to retrieve data,Please try again'})
+    }
+})
+
 
 app.listen(PORT , () => console.log(`Server Running on : ${PORT}`))
